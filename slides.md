@@ -9,7 +9,7 @@
    1. Run code
    1. Check some output against what you expect
    1. Repeat
-* Testing formalises this process and provides a way to easily compare output to your expectations
+* Testing formalises this process and provides an easy way to run and re-run tests
 
 ---
 
@@ -25,7 +25,6 @@
 ## Why test?
 
 * Encouraging breaking code into manageable testable units instead of monolithic code
-* Designing around testing improve structure
 
 ---
 
@@ -155,5 +154,5 @@ Travis will then automatically run tests on every git commit
 * [Travis R](https://docs.travis-ci.com/user/languages/r/)
 * [Julia Silge Travis begginers guide](https://juliasilge.com/blog/beginners-guide-to-travis/)
 * [Mockery](https://github.com/r-lib/mockery)
-
+* [List of expect_ functions](https://testthat.r-lib.org/reference/index.html)
 
