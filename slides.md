@@ -2,52 +2,41 @@
 
 ---
 
-## Overview
+## What is testing?
 
-* Why test
-* When to test
-* How to test
-
-Convince that testing is valuable making code easier to understand and extend and will save time in the long run
-
----
-
-## Why test?
-
-* Make sure your code works
 * Everyone probably does it already, runs a function with some input and looks at the output to ensure that it matches expected
-** Write code
-** Run code
-** Check some output against what you expect
-** Repeat
+   1. Write code
+   1. Run code
+   1. Check some output against what you expect
+   1. Repeat
+* Testing formalises this process and provides a way to easily compare output to your expectations
 
 ---
 
 ## Why test?
 
-* Works fine for a code base which is small and simple but as dependencies grow and functions interact with each other starts getting messy just doing difficutly testing
-* Writing formal tests gives a strategy for handling regressions giving confidence that you can go and change code and not create unintended side effects that you don't know about
-* Shown to reduce bugs in production code
+* Ensures code produces what you expect it to
+* Allow safe refactoring and extending
+* Catches regressions
+* Confidence to make changes
 
 ---
 
 ## Why test?
 
 * Encouraging breaking code into manageable testable units instead of monolithic code
+* Designing around testing improve structure
 
 ---
 
 ## When to test
 
----
+Software developers will tell you to do it always for all code (except maybe prototype code)
 
-## When to test
-
-* In any code which will be 
-** Used by others
-** You will extend and revisit in the future
-
-Avoiding it on exploratory one time throw away code - prototyping etc.
+In any code which will be 
+* Used by others
+* You will extend and revisit in the future
+* And the code is testable
 
 ---
 
@@ -57,25 +46,78 @@ Avoiding it on exploratory one time throw away code - prototyping etc.
 
 ## Setup
 
-* Setting up test
-* Install and use this on a package
+One time setup for a package
+
+```
+usethis::use_testthat()
+```
+Will create a `tests/testthat` directory with a script `tests/testthat.R`
 
 ---
 
-## Writing test
+## Create a new test
 
-* context
-* test
-* expect that
+```
+usethis::use_test("my-test")
+```
+
+Or create a file in `tests/testthat/` directory called `test-*.R`
 
 ---
 
-## Running test
+## Anatomy of a test
 
-* testthat on a file
-* testthat for a whole package
-* Rstuido shortcuts
-* as pacakge check
+* **context** - human readable name for a test file
+* **tests** - the tests themselves, with a description and test code including expectations
+* **expectation** - describe the expected result of a computation, can be things such as equality, class type, does it throw an error
+
+```
+context("sqrt")
+
+testthat::test_that("sqrt works as expected", {
+  expect_equal(sqrt(36), 6)
+})
+```
+
+---
+
+## Running tests
+
+* Tests for a package 
+```
+testthat::test_package()``` 
+Ctrl+Shift+T in RStudio or Build -> Test Package
+* As part of 
+```
+R CMD check
+``` 
+Ctrl+Shift+E in RStudio or Build -> Check Package
+
+---
+
+## Running tests
+
+* Test a single file 
+```
+testthat::test_file("path/to/file")
+```
+   * Can get this on a shortcut too using RStudio Addins see Tools -> Addins -> Keyboard Shortcuts
+
+---
+
+## Running tests outside of a package
+
+* Not as convenient as running as part of a package workflow
+* Create functions in an R file
+* `source` the R file in the test script or manually before running the tests
+* Call using 
+```
+testthat::test_file("path/to/file")
+```
+or 
+```
+testthat::test_dir("path/to/dir")
+```
 
 ---
 
@@ -85,13 +127,33 @@ Avoiding it on exploratory one time throw away code - prototyping etc.
 
 ## Travis CI
 
-* Continuous integration
-* Your passing tests aren't just a result of particular way you have your system setup
+* Continuous integration - automating the building and testing of code on commit to github
+* Automates checking of your package
+* Builds on a "clean" machine giving confidence that your code will work for others
+* Can use it to generate coverage reports and other fancy metrics
 
 ---
 
 ## Travis setup
 
-* triggered on build
+One time setup
+```
+usethis::use_travis()
+```
+
+Follow the instructions to turn on travis for your github repo and add the badge to your `README.md`
+
+Travis will then automatically run tests on every git commit
+
+---
+
+## Links and other cool stuff
+
+* [testthat](https://testthat.r-lib.org/)
+* [R packages testing chapter](http://r-pkgs.had.co.nz/tests.html)
+* [covr](https://github.com/r-lib/covr)
+* [Travis R](https://docs.travis-ci.com/user/languages/r/)
+* [Julia Silge Travis begginers guide](https://juliasilge.com/blog/beginners-guide-to-travis/)
+* [Mockery](https://github.com/r-lib/mockery)
 
 
